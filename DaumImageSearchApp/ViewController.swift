@@ -9,12 +9,25 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var images: [Image] = []
+    var imageModel: ImageModel = ImageModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.imageModel.delegate = self
+        self.imageModel.getImages("설현")
+        
     }
 
+}
 
+extension ViewController: ImageModelProtocol {
+    
+    func imageRetrieved(images: [Image]) {
+        self.images += images
+    }
+    
 }
 
