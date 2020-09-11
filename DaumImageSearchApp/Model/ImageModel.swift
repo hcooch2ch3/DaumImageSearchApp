@@ -9,14 +9,14 @@
 import Foundation
 
 protocol ImageModelProtocol {
-    func imageRetrieved(images: [Image])
+    func imagesRetrieved(images: [Image]?)
 }
 
 class ImageModel {
     
     var delegate: ImageModelProtocol?
     
-    func getImages(_ query: String) {
+    func requestImages(_ query: String, _ page: Int) {
         guard let delegate = self.delegate else {
             print("Delegate of ImageModel is nil.")
             return
@@ -28,7 +28,9 @@ class ImageModel {
         }
         
         urlComponents.queryItems = [
-            URLQueryItem(name: "query", value: query)
+            URLQueryItem(name: "query", value: query),
+            URLQueryItem(name: "size", value: String(30)),
+            URLQueryItem(name: "page", value: String(page))
         ]
         
         guard let url = urlComponents.url else {
@@ -52,11 +54,13 @@ class ImageModel {
             do {
                 let imageResponse: ImageResponse = try JSONDecoder().decode(ImageResponse.self, from: data)
                 DispatchQueue.main.async {
-                    delegate.imageRetrieved(images: imageResponse.images)
+                    delegate.imagesRetrieved(images: imageResponse.images)
                 }
             }
             catch {
-                
+                DispatchQueue.main.async {
+                    delegate.imagesRetrieved(images: nil)
+                }
             }
         }
         

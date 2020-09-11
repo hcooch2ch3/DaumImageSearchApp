@@ -8,10 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ImageSearchViewController: UIViewController {
     
+    // MARK:- Properties
     var images: [Image] = []
     var imageModel: ImageModel = ImageModel()
+    let cellIdentifier: String = "imageCell"
+    
+    // MARK:- IBOutlets
+    @IBOutlet weak var imageCollectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,11 +24,31 @@ class ViewController: UIViewController {
         self.imageModel.delegate = self
         self.imageModel.getImages("설현")
         
+        self.setupNavigationBar()
+        
     }
-
+    
+    func setupNavigationBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
 }
 
-extension ViewController: ImageModelProtocol {
+extension ImageSearchViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.images.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+}
+
+extension ImageSearchViewController: ImageModelProtocol {
     
     func imageRetrieved(images: [Image]) {
         self.images += images
