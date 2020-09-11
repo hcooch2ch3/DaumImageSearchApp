@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ImageModelProtocol {
-    func imagesRetrieved(images: [Image]?)
+    func imagesRequested(images: [Image]?)
 }
 
 class ImageModel {
@@ -54,12 +54,12 @@ class ImageModel {
             do {
                 let imageResponse: ImageResponse = try JSONDecoder().decode(ImageResponse.self, from: data)
                 DispatchQueue.main.async {
-                    delegate.imagesRetrieved(images: imageResponse.images)
+                    delegate.imagesRequested(images: imageResponse.images)
                 }
             }
             catch {
                 DispatchQueue.main.async {
-                    delegate.imagesRetrieved(images: nil)
+                    delegate.imagesRequested(images: nil)
                 }
             }
         }

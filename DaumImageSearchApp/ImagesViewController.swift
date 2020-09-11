@@ -25,6 +25,7 @@ class ImagesViewController: UIViewController {
 
         self.imageModel.delegate = self
         self.imagesCollectionView.collectionViewLayout = flowLayout()
+        self.imagesCollectionView.prefetchDataSource = self
         self.setupNavigationBar()
     }
     
@@ -41,6 +42,16 @@ class ImagesViewController: UIViewController {
 extension ImagesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if self.images.count == 0 {
+            if self.lastSearchText == "" {
+                collectionView.showEmptyMessage("검색어를 입력하세요.")
+            } else {
+                collectionView.showEmptyMessage("검색결과가 없습니다.")
+            }
+        } else {
+            collectionView.dismissEmptyMessage()
+        }
+        
         return self.images.count
     }
     
@@ -65,6 +76,18 @@ extension ImagesViewController: UICollectionViewDataSource {
         
 }
 
+extension ImagesViewController: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let upcomingRows = indexPaths.map { $0.row }
+        if let maxIndex = upcomingRows.max(), maxIndex > (self.page * 30) - 5 {
+            self.page += 1
+            self.imageModel.requestImages(self.lastSearchText, self.page)
+        }
+    }
+    
+}
+
 extension ImagesViewController: UISearchControllerDelegate, UISearchBarDelegate {
     
     func didDismissSearchController(_ searchController: UISearchController) {
@@ -76,14 +99,14 @@ extension ImagesViewController: UISearchControllerDelegate, UISearchBarDelegate 
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { timer in
             if self.lastSearchText == searchText {
                 self.images.removeAll()
-                if searchText == "" {
-                    self.imagesCollectionView.reloadData()
-                } else {
-                    self.page = 1
-                    self.imageModel.requestImages(searchText, self.page)
-                }
+                self.page = 1
+                self.imageModel.requestImages(searchText, self.page)
             }
         })
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.navigationItem.searchController?.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -98,6 +121,7 @@ extension ImagesViewController {
         
         let itemSpacing: CGFloat = 3
         let itemInOneLine: CGFloat = 3
+        
         var deviceWidth: CGFloat = 0
         
         if UIDevice.current.orientation == .unknown {
@@ -118,11 +142,16 @@ extension ImagesViewController {
 
 extension ImagesViewController: ImageModelProtocol {
     
-    func imagesRetrieved(images: [Image]?) {
+    func imagesRequested(images: [Image]?) {
         if let newImages = images {
             self.images += newImages
         }
+        
         self.imagesCollectionView.reloadData()
+        
+        if images != nil && images!.count > 0 && self.page == 1 {
+            self.imagesCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        }
     }
     
 }

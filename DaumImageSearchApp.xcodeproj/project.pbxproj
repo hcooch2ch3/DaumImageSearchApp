@@ -17,6 +17,7 @@
 		36517B902509412200C583F7 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B8F2509412200C583F7 /* Image.swift */; };
 		36517B92250941B400C583F7 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B91250941B400C583F7 /* ImageModel.swift */; };
 		36517B94250B45E000C583F7 /* ImagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B93250B45E000C583F7 /* ImagesCollectionViewCell.swift */; };
+		36517B99250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B98250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		36517B8F2509412200C583F7 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		36517B91250941B400C583F7 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		36517B93250B45E000C583F7 /* ImagesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		36517B98250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ShowEmptyMessage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		36517B722509372400C583F7 /* DaumImageSearchApp */ = {
 			isa = PBXGroup;
 			children = (
+				36517B95250BE2E000C583F7 /* Extension */,
 				36517B8E2509411200C583F7 /* Model */,
 				36517B732509372400C583F7 /* AppDelegate.swift */,
 				36517B752509372400C583F7 /* SceneDelegate.swift */,
@@ -85,6 +88,14 @@
 				36517B91250941B400C583F7 /* ImageModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		36517B95250BE2E000C583F7 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				36517B98250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +176,7 @@
 				36517B742509372400C583F7 /* AppDelegate.swift in Sources */,
 				36517B762509372400C583F7 /* SceneDelegate.swift in Sources */,
 				36517B8D25093F0300C583F7 /* ImageResponse.swift in Sources */,
+				36517B99250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
