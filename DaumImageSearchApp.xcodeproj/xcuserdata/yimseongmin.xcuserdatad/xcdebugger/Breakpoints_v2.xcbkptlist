@@ -119,54 +119,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EA574DA6-5E45-4A85-BE32-14D9892BF29C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DaumImageSearchApp/ImageViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EA574DA6-5E45-4A85-BE32-14D9892BF29C - 6571ebe1f2f89045"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DaumImageSearchApp.ImageViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "DaumImageSearchApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yimseongmin/Desktop/DaumImageSearchApp/DaumImageSearchApp/ImageViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "20"
-                  endingLineNumber = "20"
-                  offsetFromSymbolStart = "487">
-               </Location>
-               <Location
-                  uuid = "EA574DA6-5E45-4A85-BE32-14D9892BF29C - c3505788af55a349"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in DaumImageSearchApp.ImageViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "DaumImageSearchApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yimseongmin/Desktop/DaumImageSearchApp/DaumImageSearchApp/ImageViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "356">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "5BC666D9-C228-4611-87A3-9515333BCD18"
             shouldBeEnabled = "No"
             ignoreCount = "0"

@@ -23,27 +23,23 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
         
         guard let selectedImage = self.selectedImage else { return }
-        DispatchQueue.global().async {
-            guard let imageURL: URL = URL(string: selectedImage.imageURL) else { return }
-            guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-            guard let image = UIImage(data: imageData) else { return }
-            DispatchQueue.main.async {
-                self.selectedImageView.image = image
-                
-                let zoomScale = self.selectedImageView.bounds.size.width / self.selectedImageView.contentClippingRect.width
-                if zoomScale > 1 {
-                    self.scrollView.maximumZoomScale = zoomScale + 2
-                    self.scrollView.zoomScale = zoomScale
-                    self.scrollView.setContentOffset(CGPoint(x: (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2, y: 0), animated: false)
-                }
-            }
+        guard let imageURL: URL = URL(string: selectedImage.imageURL) else { return }
+        guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
+        guard let image = UIImage(data: imageData) else { return }
+        self.selectedImageView.image = image
+        
+        let zoomScale = self.selectedImageView.bounds.size.width / self.selectedImageView.contentClippingRect.width
+        if zoomScale > 1 {
+            self.scrollView.maximumZoomScale = zoomScale + 2
+            self.scrollView.zoomScale = zoomScale
+            self.scrollView.setContentOffset(CGPoint(x: (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2, y: 0), animated: false)
         }
         
-        displaySiteNameLabel.text = selectedImage.displaySiteName
-        dateTimeLabel.text = selectedImage.dateTime.toString(dateFormat: "yyyy/MM/dd HH:mm:ss")
+        self.displaySiteNameLabel.text = selectedImage.displaySiteName
+        self.dateTimeLabel.text = selectedImage.dateTime.toString(dateFormat: "yyyy/MM/dd HH:mm:ss")
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleFullScreen))
-        view.addGestureRecognizer(tap)
+        self.view.addGestureRecognizer(tap)
     }
     
     override var prefersStatusBarHidden: Bool {
