@@ -16,7 +16,7 @@ struct Image: Codable {
     let height: Int
     let displaySiteName: String
     let docURL: String
-    let dateTime: String
+    let dateTime: Date
     
     enum CodingKeys: String, CodingKey {
         case collection, width, height

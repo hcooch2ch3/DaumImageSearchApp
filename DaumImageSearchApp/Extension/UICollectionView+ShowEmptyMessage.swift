@@ -9,7 +9,6 @@
 import UIKit
 
 extension UICollectionView {
-    
     func showEmptyMessage(_ message: String) {
         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
         messageLabel.text = message
@@ -25,5 +24,4 @@ extension UICollectionView {
     func dismissEmptyMessage() {
         self.backgroundView = nil
     }
-    
 }

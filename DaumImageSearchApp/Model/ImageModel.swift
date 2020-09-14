@@ -15,10 +15,24 @@ protocol ImageModelProtocol {
 class ImageModel {
     
     var delegate: ImageModelProtocol?
+    let decoder : JSONDecoder = JSONDecoder()
+    
+    init() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        self.decoder.dateDecodingStrategy = .formatted(dateFormatter)
+    }
     
     func requestImages(_ query: String, _ page: Int) {
         guard let delegate = self.delegate else {
             print("Delegate of ImageModel is nil.")
+            return
+        }
+        
+        guard query != "" else {
+            DispatchQueue.main.async {
+                delegate.imagesRequested(images: nil)
+            }
             return
         }
         
@@ -52,12 +66,36 @@ class ImageModel {
             }
             
             do {
-                let imageResponse: ImageResponse = try JSONDecoder().decode(ImageResponse.self, from: data)
+                let imageResponse: ImageResponse = try self.decoder.decode(ImageResponse.self, from: data)
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: imageResponse.images)
                 }
             }
-            catch {
+            catch let DecodingError.dataCorrupted(context) {
+                print(context)
+                DispatchQueue.main.async {
+                    delegate.imagesRequested(images: nil)
+                }
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                DispatchQueue.main.async {
+                    delegate.imagesRequested(images: nil)
+                }
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                DispatchQueue.main.async {
+                    delegate.imagesRequested(images: nil)
+                }
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                DispatchQueue.main.async {
+                    delegate.imagesRequested(images: nil)
+                }
+            } catch {
+                print("error: ", error)
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: nil)
                 }

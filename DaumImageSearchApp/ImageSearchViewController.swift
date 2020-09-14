@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImagesViewController: UIViewController {
+class ImageSearchViewController: UIViewController {
     
     // MARK:- Properties
     var images: [Image] = []
@@ -37,9 +37,18 @@ class ImagesViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let imageViewController: ImageViewController = segue.destination as? ImageViewController else { return }
+        guard let cell: ImagesCollectionViewCell = sender as? ImagesCollectionViewCell else { return }
+        guard let indexPath = imagesCollectionView.indexPath(for: cell) else { return }
+        let image = self.images[indexPath.row]
+        
+        imageViewController.selectedImage = image
+    }
+    
 }
 
-extension ImagesViewController: UICollectionViewDataSource {
+extension ImageSearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.images.count == 0 {
@@ -62,13 +71,12 @@ extension ImagesViewController: UICollectionViewDataSource {
         
         let image = self.images[indexPath.row]
         
-        DispatchQueue.global().async {
+        DispatchQueue.main.async {
             guard let imageURL: URL = URL(string: image.thumbnailURL) else { return }
             guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
             guard let thumbnailImage = UIImage(data: imageData) else { return }
-            DispatchQueue.main.async {
-                cell.thumbnailImageView.image = thumbnailImage
-            }
+        
+            cell.thumbnailImageView.image = thumbnailImage
         }
         
         return cell
@@ -76,7 +84,7 @@ extension ImagesViewController: UICollectionViewDataSource {
         
 }
 
-extension ImagesViewController: UICollectionViewDataSourcePrefetching {
+extension ImageSearchViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let upcomingRows = indexPaths.map { $0.row }
@@ -88,7 +96,7 @@ extension ImagesViewController: UICollectionViewDataSourcePrefetching {
     
 }
 
-extension ImagesViewController: UISearchControllerDelegate, UISearchBarDelegate {
+extension ImageSearchViewController: UISearchControllerDelegate, UISearchBarDelegate {
     
     func didDismissSearchController(_ searchController: UISearchController) {
         searchController.searchBar.text = lastSearchText
@@ -111,7 +119,7 @@ extension ImagesViewController: UISearchControllerDelegate, UISearchBarDelegate 
     
 }
 
-extension ImagesViewController {
+extension ImageSearchViewController {
     
     func flowLayout() -> UICollectionViewFlowLayout {
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -140,7 +148,7 @@ extension ImagesViewController {
     
 }
 
-extension ImagesViewController: ImageModelProtocol {
+extension ImageSearchViewController: ImageModelProtocol {
     
     func imagesRequested(images: [Image]?) {
         if let newImages = images {
