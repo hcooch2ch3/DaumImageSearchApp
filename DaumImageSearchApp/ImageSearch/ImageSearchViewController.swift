@@ -71,15 +71,21 @@ extension ImageSearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? ImagesCollectionViewCell else { return ImagesCollectionViewCell() }
-        
+        // 셀 테그에 이미지 순서 대입(셀 재사용 및 비동기 이미지 로드로 인한 셀 이미지 오배치 방지 목적).
+        cell.tag = indexPath.row
         let image = self.images[indexPath.row]
         
-        DispatchQueue.main.async {
-            guard let imageURL: URL = URL(string: image.thumbnailURL), let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-            guard let thumbnailImage = UIImage(data: imageData) else { return }
-        
-            cell.thumbnailImageView.image = thumbnailImage
+        DispatchQueue.global().async {
+            guard let imageURL: URL = URL(string: image.thumbnailURL) else { return }
+            guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
+            DispatchQueue.main.async {
+                // 셀 테그와 이미지 순서가 같을 경우만 이미지 삽입.
+                if cell.tag == indexPath.row {
+                    cell.thumbnailImageView.image = UIImage(data: imageData)
+                }
+            }
         }
+        
         
         return cell
     }
@@ -110,20 +116,18 @@ extension ImageSearchViewController: UISearchControllerDelegate, UISearchBarDele
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // 검색창의 문자가 변할때마다 최종 검색어 변수에 대입.
+        self.lastSearchText = searchText
         // 검색창의 현재 검색어가 1초 이전의 최종 검색어와 같을 경우(검색어가 1초 이상 유지될 경우), 현재 검색어로 이미지 요청.
-        DispatchQueue.main.async {
-            // 검색창의 문자가 변할때마다 최종 검색어 변수에 대입.
-            self.lastSearchText = searchText
-            _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { timer in
-                if self.lastSearchText == searchText {
-                    // 이전에 추가된 이미지 삭제
-                    self.images.removeAll()
-                    // 페이지 초기화
-                    self.page = 1
-                    self.imageModel.requestImages(searchText, self.page)
-                }
-            })
-        }
+        _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { timer in
+            if self.lastSearchText == searchText {
+                // 이전에 추가된 이미지 삭제
+                self.images.removeAll()
+                // 페이지 초기화
+                self.page = 1
+                self.imageModel.requestImages(searchText, self.page)
+            }
+        })
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
