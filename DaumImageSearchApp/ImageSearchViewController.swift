@@ -103,14 +103,16 @@ extension ImageSearchViewController: UISearchControllerDelegate, UISearchBarDele
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        lastSearchText = searchText
-        _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { timer in
-            if self.lastSearchText == searchText {
-                self.images.removeAll()
-                self.page = 1
-                self.imageModel.requestImages(searchText, self.page)
-            }
-        })
+        DispatchQueue.main.async {
+            self.lastSearchText = searchText
+            _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { timer in
+                if self.lastSearchText == searchText {
+                    self.images.removeAll()
+                    self.page = 1
+                    self.imageModel.requestImages(searchText, self.page)
+                }
+            })
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -20,7 +20,6 @@
 		36517B99250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B98250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift */; };
 		36517B9B250E84D100C583F7 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B9A250E84D100C583F7 /* ImageViewController.swift */; };
 		36517B9E250F47C100C583F7 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B9D250F47C100C583F7 /* Date+toString.swift */; };
-		36517BA0250F691A00C583F7 /* UIImageView+contentClippingRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36517B9F250F691A00C583F7 /* UIImageView+contentClippingRect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +38,6 @@
 		36517B98250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ShowEmptyMessage.swift"; sourceTree = "<group>"; };
 		36517B9A250E84D100C583F7 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		36517B9D250F47C100C583F7 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
-		36517B9F250F691A00C583F7 /* UIImageView+contentClippingRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+contentClippingRect.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +100,6 @@
 			children = (
 				36517B98250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift */,
 				36517B9D250F47C100C583F7 /* Date+toString.swift */,
-				36517B9F250F691A00C583F7 /* UIImageView+contentClippingRect.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -187,7 +184,6 @@
 				36517B742509372400C583F7 /* AppDelegate.swift in Sources */,
 				36517B762509372400C583F7 /* SceneDelegate.swift in Sources */,
 				36517B8D25093F0300C583F7 /* ImageResponse.swift in Sources */,
-				36517BA0250F691A00C583F7 /* UIImageView+contentClippingRect.swift in Sources */,
 				36517B99250BE37900C583F7 /* UICollectionView+ShowEmptyMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

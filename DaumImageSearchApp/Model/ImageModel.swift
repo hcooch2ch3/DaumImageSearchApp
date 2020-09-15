@@ -76,25 +76,29 @@ class ImageModel {
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: nil)
                 }
-            } catch let DecodingError.keyNotFound(key, context) {
+            }
+            catch let DecodingError.keyNotFound(key, context) {
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: nil)
                 }
-            } catch let DecodingError.valueNotFound(value, context) {
+            }
+            catch let DecodingError.valueNotFound(value, context) {
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: nil)
                 }
-            } catch let DecodingError.typeMismatch(type, context)  {
+            }
+            catch let DecodingError.typeMismatch(type, context)  {
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: nil)
                 }
-            } catch {
+            }
+            catch {
                 print("error: ", error)
                 DispatchQueue.main.async {
                     delegate.imagesRequested(images: nil)
