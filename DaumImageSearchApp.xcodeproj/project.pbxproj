@@ -70,14 +70,13 @@
 		36517B722509372400C583F7 /* DaumImageSearchApp */ = {
 			isa = PBXGroup;
 			children = (
+				36517BA22510C4CA00C583F7 /* ImageSearch */,
+				36517BA12510C4A500C583F7 /* ImageSelection */,
 				36517B95250BE2E000C583F7 /* Extension */,
 				36517B8E2509411200C583F7 /* Model */,
 				36517B732509372400C583F7 /* AppDelegate.swift */,
 				36517B752509372400C583F7 /* SceneDelegate.swift */,
-				36517B93250B45E000C583F7 /* ImagesCollectionViewCell.swift */,
-				36517B772509372400C583F7 /* ImageSearchViewController.swift */,
 				36517B792509372400C583F7 /* Main.storyboard */,
-				36517B9A250E84D100C583F7 /* ImageViewController.swift */,
 				36517B7C2509372500C583F7 /* Assets.xcassets */,
 				36517B7E2509372500C583F7 /* LaunchScreen.storyboard */,
 				36517B812509372500C583F7 /* Info.plist */,
@@ -102,6 +101,23 @@
 				36517B9D250F47C100C583F7 /* Date+toString.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		36517BA12510C4A500C583F7 /* ImageSelection */ = {
+			isa = PBXGroup;
+			children = (
+				36517B9A250E84D100C583F7 /* ImageViewController.swift */,
+			);
+			path = ImageSelection;
+			sourceTree = "<group>";
+		};
+		36517BA22510C4CA00C583F7 /* ImageSearch */ = {
+			isa = PBXGroup;
+			children = (
+				36517B93250B45E000C583F7 /* ImagesCollectionViewCell.swift */,
+				36517B772509372400C583F7 /* ImageSearchViewController.swift */,
+			);
+			path = ImageSearch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

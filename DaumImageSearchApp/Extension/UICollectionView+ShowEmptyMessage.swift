@@ -9,6 +9,13 @@
 import UIKit
 
 extension UICollectionView {
+    
+    /**
+    컬렉션 뷰에 아무것도 없을 때 안내 메세지를 표시.
+    
+    - Parameters: 컬렉션 뷰에 표시할 안내 메세지 'String'
+    - Returns: None
+    */
     func showEmptyMessage(_ message: String) {
         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
         messageLabel.text = message
@@ -21,6 +28,12 @@ extension UICollectionView {
         self.backgroundView = messageLabel;
     }
 
+    /**
+    컬렉션 뷰 안내 메세지 제거.
+    
+    - Parameters: None
+    - Returns: None
+    */
     func dismissEmptyMessage() {
         self.backgroundView = nil
     }

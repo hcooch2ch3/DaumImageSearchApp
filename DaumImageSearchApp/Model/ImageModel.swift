@@ -18,21 +18,29 @@ class ImageModel {
     let decoder : JSONDecoder = JSONDecoder()
     
     init() {
+        // 이미지 요청에 포함된 날짜 데이터를 저장하기 위한 데이터 포맷 설정.
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
         self.decoder.dateDecodingStrategy = .formatted(dateFormatter)
     }
     
+    /**
+    다음 카카오 API에 이미지 1페이지 (30개) 요청.
+    
+    - Parameters:
+        - query: 이미지 검색 키워드
+        - page: 이미지 검색 페이지 번호 (페이지당 일정 개수 이미지 포함)
+    - Returns: None
+    */
     func requestImages(_ query: String, _ page: Int) {
         guard let delegate = self.delegate else {
             print("Delegate of ImageModel is nil.")
             return
         }
         
+        // 검색어가 없을 경우, nil 전달.
         guard query != "" else {
-            DispatchQueue.main.async {
-                delegate.imagesRequested(images: nil)
-            }
+            delegate.imagesRequested(images: nil)
             return
         }
         
@@ -41,6 +49,7 @@ class ImageModel {
             return
         }
         
+        // 검색에, 이미지 개수, 페이지 번호 설정.
         urlComponents.queryItems = [
             URLQueryItem(name: "query", value: query),
             URLQueryItem(name: "size", value: String(30)),
@@ -52,6 +61,7 @@ class ImageModel {
         }
         
         var urlRequest = URLRequest(url: url)
+        // 카카오 API 키 설정.
         urlRequest.setValue("KakaoAK 344d4c75380cb7c9d0124dac1cf5e6df", forHTTPHeaderField: "Authorization")
         
         let dataTask: URLSessionDataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
@@ -65,44 +75,34 @@ class ImageModel {
                 return
             }
             
+            // 이미지를 성공적으로 받아서 디코딩 했을 경우, 뷰컨트롤러에 이미지 전달.
             do {
                 let imageResponse: ImageResponse = try self.decoder.decode(ImageResponse.self, from: data)
-                DispatchQueue.main.async {
-                    delegate.imagesRequested(images: imageResponse.images)
-                }
+                delegate.imagesRequested(images: imageResponse.images)
             }
+            // 이미지 디코딩에 실패 했을 경우
             catch let DecodingError.dataCorrupted(context) {
                 print(context)
-                DispatchQueue.main.async {
-                    delegate.imagesRequested(images: nil)
-                }
+                delegate.imagesRequested(images: nil)
             }
             catch let DecodingError.keyNotFound(key, context) {
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                DispatchQueue.main.async {
-                    delegate.imagesRequested(images: nil)
-                }
+                delegate.imagesRequested(images: nil)
             }
             catch let DecodingError.valueNotFound(value, context) {
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                DispatchQueue.main.async {
-                    delegate.imagesRequested(images: nil)
-                }
+                delegate.imagesRequested(images: nil)
             }
             catch let DecodingError.typeMismatch(type, context)  {
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                DispatchQueue.main.async {
-                    delegate.imagesRequested(images: nil)
-                }
+                delegate.imagesRequested(images: nil)
             }
             catch {
                 print("error: ", error)
-                DispatchQueue.main.async {
-                    delegate.imagesRequested(images: nil)
-                }
+                delegate.imagesRequested(images: nil)
             }
         }
         
